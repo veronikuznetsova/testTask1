@@ -12,11 +12,13 @@ const App: React.FC = () => {
     dispatch(fetchProject());
   }, [dispatch]);
 
+  console.log(project)
+
   return (
     <div className={styles.appWrapper}>
-      <div>id: {project.id}</div>
-      <div>name: {project.name}</div>
-      <div>modified: {project.modified}</div>
+      <div>id: {project?.id}</div>
+      <div>name: {project?.name}</div>
+      <div>modified: {project?.modified}</div>
     </div>
   );
 };
