@@ -1,7 +1,16 @@
 export async function http(path: string, config: RequestInit): Promise<string> {
   const baseUrl = process.env.REACT_APP_API_BASE_URL;
 
-  config.headers = { "Content-Type": "application/json" };
+  config.headers = {
+    ...config.headers,
+    "Access-Control-Allow-Origin": "*",
+    "Access-Control-Expose-Headers": "X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version",
+    "Access-Control-Allow-Methods": "GET,OPTIONS",
+    "Access-Control-Allow-Headers": "*",
+    "Access-Control-Allow-Credentials": "true",
+    "Content-Type": "application/json; charset=utf-8",
+    "Connection": "keep-alive",
+  };
 
   return fetch(`${baseUrl + path}`, config)
     .then((response) => {
@@ -12,6 +21,7 @@ export async function http(path: string, config: RequestInit): Promise<string> {
     })
     .catch((error) => error.message);
 }
+
 
 interface IRequest {
   path: string;

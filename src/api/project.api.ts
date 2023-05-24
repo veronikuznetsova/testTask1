@@ -5,7 +5,7 @@ export const projectApi = {
     Api.get({
       path: "init",
     }),
-  getProjectById: (id: number) =>
+  getProjectById: (id: string) =>
   Api.get({
     path: "project/" + id,
   }),

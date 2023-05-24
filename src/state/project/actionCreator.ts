@@ -14,7 +14,7 @@ export const fetchProject = () => async (dispatch: any) => {
   }
 };
 
-export const fetchProjectById = (id: number) => async (dispatch: any) => {
+export const fetchProjectById = (id: string) => async (dispatch: any) => {
   dispatch(getProjectByIdLoading(true));
   try {
     const res = await projectApi.getProjectById(id);
