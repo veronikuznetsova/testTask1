@@ -10,6 +10,7 @@ export async function http(path: string, config: RequestInit): Promise<string> {
     "Access-Control-Allow-Credentials": "true",
     "Content-Type": "application/json; charset=utf-8",
     "Connection": "keep-alive",
+    "Content-Security-Policy": "upgrade-insecure-requests"
   };
 
   return fetch(`${baseUrl + path}`, config)
