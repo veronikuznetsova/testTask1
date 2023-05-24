@@ -1,25 +1,55 @@
-import React, { useEffect } from "react";
+import React, { ChangeEvent, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import styles from "./App.module.css";
 import { useAppDispatch } from "store/hooks";
-import { fetchProject } from "state/project/actionCreator";
+import { fetchProject, fetchProjectById } from "state/project/actionCreator";
+import Input from "components/Common/Input/Input";
+import Button from "components/Common/Button/Button";
+import Text from "components/Common/Text/Text";
+import Header from "components/Header/Header";
+import Span from "components/Common/Span/Span";
+import BlockWrapper from "components/BlockWrapper/BlockWrapper";
 
 const App: React.FC = () => {
-  const { project } = useSelector((state: any) => state.project);
+  const { project, projectById } = useSelector((state: any) => state.project);
   const dispatch = useAppDispatch();
+  const [inputValue, setInputValue] = useState("");
 
   useEffect(() => {
-    dispatch(fetchProject());
-  }, [dispatch]);
+    project?.id && dispatch(fetchProjectById(project.id));
+  }, [dispatch, project]);
 
-  console.log(project)
+  const clickHandler = () => {
+    inputValue
+      ? dispatch(fetchProjectById(inputValue))
+      : dispatch(fetchProject());
+    setInputValue("");
+  };
+
+  const changeHandler = (event: ChangeEvent<HTMLInputElement>) => {
+    setInputValue(event.target.value);
+  };
 
   return (
-    <div className={styles.appWrapper}>
-      <div>id: {project?.id}</div>
-      <div>name: {project?.name}</div>
-      <div>modified: {project?.modified}</div>
-    </div>
+    <>
+      <Header>
+        <Text>Project ID:</Text>
+        <Input
+          placeholder="For random leave empty"
+          onChange={changeHandler}
+          value={inputValue}
+          type="search"
+        />
+        <Button onClick={clickHandler}>Fetch</Button>
+      </Header>
+      <BlockWrapper>
+        <Text>
+          ID: <Span>{projectById?.id}</Span>
+        </Text>
+        <Text>
+          Name: <Span>{projectById?.project?.name}</Span>
+        </Text>
+      </BlockWrapper>
+    </>
   );
 };
 
