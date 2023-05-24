@@ -6,6 +6,11 @@ export interface IProject {
 
 export interface IProjectById {
   id: string;
+  project:IProjectByIdInfo;
+}
+
+export interface IProjectByIdInfo {
+  id: string;
   name: string;
   width: number;
   height: number;
@@ -13,14 +18,14 @@ export interface IProjectById {
 }
 
 export interface IProjectItem {
-  id: string,
-  type: 'rectange' | 'ellipse',            
-  color: string,
-  rotation: number,
-  x: number,
-  y: number,
-  width: number,
-  height: number
+  id: string;
+  type: 'rectangle' | 'ellipse';           
+  color: string;
+  rotation: number;
+  x: number;
+  y: number;
+  width: number;
+  height: number;
 }
 
 export interface IProjectState {
