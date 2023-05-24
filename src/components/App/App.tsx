@@ -8,6 +8,7 @@ import Text from "components/Common/Text/Text";
 import Header from "components/Header/Header";
 import Span from "components/Common/Span/Span";
 import BlockWrapper from "components/BlockWrapper/BlockWrapper";
+import ProjectBlock from "components/ProjectBlock/ProjectBlock";
 
 const App: React.FC = () => {
   const { project, projectById } = useSelector((state: any) => state.project);
@@ -42,13 +43,20 @@ const App: React.FC = () => {
         <Button onClick={clickHandler}>Fetch</Button>
       </Header>
       <BlockWrapper>
-        <Text>
-          ID: <Span>{projectById?.id}</Span>
-        </Text>
-        <Text>
-          Name: <Span>{projectById?.project?.name}</Span>
-        </Text>
+        {projectById ? (
+          <>
+            <Text>
+              ID: <Span>{projectById?.id}</Span>
+            </Text>
+            <Text>
+              Name: <Span>{projectById?.project?.name}</Span>
+            </Text>
+          </>
+        ) : (
+          <Text>Empty project...</Text>
+        )}
       </BlockWrapper>
+      {projectById && <ProjectBlock projectData={projectById} />}
     </>
   );
 };
