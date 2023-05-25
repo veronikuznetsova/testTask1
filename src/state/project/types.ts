@@ -33,4 +33,5 @@ export interface IProjectState {
   projectById?: IProjectById;
   getProjectLoading: boolean;
   getProjectByIdLoading: boolean;
+  error?: string | null;
 }
