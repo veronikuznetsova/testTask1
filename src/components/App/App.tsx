@@ -11,7 +11,9 @@ import BlockWrapper from "components/BlockWrapper/BlockWrapper";
 import ProjectBlock from "components/ProjectBlock/ProjectBlock";
 
 const App: React.FC = () => {
-  const { project, projectById } = useSelector((state: any) => state.project);
+  const { project, projectById, error } = useSelector(
+    (state: any) => state.project
+  );
   const dispatch = useAppDispatch();
   const [inputValue, setInputValue] = useState("");
 
@@ -42,20 +44,24 @@ const App: React.FC = () => {
         />
         <Button onClick={clickHandler}>Fetch</Button>
       </Header>
-      <BlockWrapper>
-        {projectById ? (
-          <>
-            <Text>
-              ID: <Span>{projectById?.id}</Span>
-            </Text>
-            <Text>
-              Name: <Span>{projectById?.project?.name}</Span>
-            </Text>
-          </>
-        ) : (
-          <Text>Empty project...</Text>
-        )}
-      </BlockWrapper>
+      {error ? (
+        <BlockWrapper>{error}</BlockWrapper>
+      ) : (
+        <BlockWrapper>
+          {projectById ? (
+            <>
+              <Text>
+                ID: <Span>{projectById?.id}</Span>
+              </Text>
+              <Text>
+                Name: <Span>{projectById?.project?.name}</Span>
+              </Text>
+            </>
+          ) : (
+            <Text>Empty project...</Text>
+          )}
+        </BlockWrapper>
+      )}
       {projectById && <ProjectBlock projectData={projectById} />}
     </>
   );
