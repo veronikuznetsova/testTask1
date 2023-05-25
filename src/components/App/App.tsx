@@ -11,9 +11,13 @@ import BlockWrapper from "components/BlockWrapper/BlockWrapper";
 import ProjectBlock from "components/ProjectBlock/ProjectBlock";
 
 const App: React.FC = () => {
-  const { project, projectById, error } = useSelector(
-    (state: any) => state.project
-  );
+  const {
+    project,
+    projectById,
+    error,
+    getProjectLoading,
+    getProjectByIdLoading,
+  } = useSelector((state: any) => state.project);
   const dispatch = useAppDispatch();
   const [inputValue, setInputValue] = useState("");
 
@@ -48,7 +52,7 @@ const App: React.FC = () => {
         <BlockWrapper>{error}</BlockWrapper>
       ) : (
         <BlockWrapper>
-          {projectById ? (
+          {projectById && !getProjectLoading && !getProjectByIdLoading? (
             <>
               <Text>
                 ID: <Span>{projectById?.id}</Span>
@@ -56,13 +60,15 @@ const App: React.FC = () => {
               <Text>
                 Name: <Span>{projectById?.project?.name}</Span>
               </Text>
+              <ProjectBlock projectData={projectById} />
             </>
+          ) : getProjectLoading || getProjectByIdLoading ? (
+            <Text>Loading...</Text>
           ) : (
             <Text>Empty project...</Text>
           )}
         </BlockWrapper>
       )}
-      {projectById && <ProjectBlock projectData={projectById} />}
     </>
   );
 };
